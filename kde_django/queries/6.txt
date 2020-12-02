@@ -1,0 +1,17 @@
+PREFIX co: <http://www.semanticweb.org/kde_project/covid_effects#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+ 
+
+select DISTINCT ?Accomodation_Countyname ?Accomodation_Count ?Population 
+(xsd:int(xsd:float(?Accomodation_Count)/xsd:float(?Population)*10000) AS ?Ratio){
+    {  
+    select DISTINCT ?Accomodation_Countyname (count(distinct ?acc_name) as ?Accomodation_Count) 
+        where { 
+    ?s co:acc_is_in_cvd_countyname ?Accomodation_Countyname .
+    ?s co:acc_name ?acc_name .
+    }GROUP BY ?Accomodation_Countyname 
+    }
+    
+    {?Accomodation_Countyname co:cov_population ?Population.}   
+} order by desc(?Ratio)  

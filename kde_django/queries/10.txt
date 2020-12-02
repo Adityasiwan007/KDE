@@ -1,0 +1,26 @@
+PREFIX co: <http://www.semanticweb.org/kde_project/covid_effects#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+ 
+
+ 
+select ?peakX ?peak (xsd:int(?peakX)-xsd:int(?peak) AS ?Difference){
+    
+    {  
+    select  ?cov_countyname (count(distinct ?att_name) as ?countY) where { 
+    ?s co:att_is_in_cvd_countyname ?cov_countyname .
+    ?s co:att_name ?att_name .
+    }GROUP BY ?cov_countyname order by asc(xsd:int(?countY)) limit 1
+    }
+    
+    {?cov_countyname co:cov_peakcovidcases ?peak.}
+    
+    {  
+    select  ?cov_countynameX (count(distinct ?att_nameX) as ?countX) where { 
+    ?s co:att_is_in_cvd_countyname ?cov_countynameX .
+    ?s co:att_name ?att_nameX .
+    }GROUP BY ?cov_countynameX order by desc(xsd:int(?countX)) limit 1
+    }
+    
+    {?cov_countynameX co:cov_peakcovidcases ?peakX.}
+    
+} 

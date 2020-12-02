@@ -1,0 +1,19 @@
+PREFIX co: <http://www.semanticweb.org/kde_project/covid_effects#>
+
+select DISTINCT ?Attraction_Countyname ?Count ?Date_Crossing_100_Cases {
+
+    {  
+
+    select DISTINCT ?Attraction_Countyname (count(distinct ?att_name) as ?Count) where { 
+
+    ?s co:att_is_in_cvd_countyname ?Attraction_Countyname .
+
+    ?s co:att_name ?att_name .
+
+    }GROUP BY ?Attraction_Countyname order by desc(?Count)  
+
+    }
+
+    {?Attraction_Countyname co:cov_dateofcrossing100 ?Date_Crossing_100_Cases.}   
+
+}
