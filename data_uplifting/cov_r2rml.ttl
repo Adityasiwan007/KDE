@@ -55,33 +55,6 @@ rr:objectMap [
 rr:column "ID";
 ];
 ];
-
-# <---- ignore---->
-# rr:predicateObjectMap [
-# rr:predicateMap [
-# rr:constant co:is_in_date_to;
-# ];
-# rr:objectMap [
-# rr:parentTriplesMap  <#TriplesMapgdp>;
-# rr:joinCondition [
-# rr:child "DATEOFCROSSING100";
-# rr:parent "DATE_TO";
-# ];
-# ];
-# ];
-
-# rr:predicateObjectMap [
-# rr:predicateMap [
-# rr:constant co:is_in_date_from;
-# ];
-# rr:objectMap [
-# rr:parentTriplesMap  <#TriplesMapgdp>;
-# rr:joinCondition [
-# rr:child "DATEOFCROSSING100";
-# rr:parent "DATE_FROM";
-# ];
-# ];
-# ];
 .
 
 #Mapping GDP dataset
