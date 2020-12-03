@@ -6,6 +6,7 @@ NOTE : (Change the GraphDB host link in views.py)
 
 ```
 virtualenv -p python .
+source bin/activate
 pip install -r requirements.txt
 cd kde_django/
 python manage.py runserver
