@@ -1,31 +1,28 @@
 PREFIX co: <http://www.semanticweb.org/kde_project/covid_effects#>
 
-select DISTINCT * {
-
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+select DISTINCT ?Countyname ?Attraction_Count  ?Accomodation_Count  
+(xsd:float(xsd:float(?Attraction_Count)/xsd:float(?Accomodation_Count)) AS ?Ratio){
     {  
+    select DISTINCT ?Countyname (count(distinct ?att_name) as ?Attraction_Count) where { 
 
-    select DISTINCT ?Attraction_Countyname (count(distinct ?att_name) as ?Attraction_Count) where { 
-
-    ?s co:att_is_in_cvd_countyname ?Attraction_Countyname .
+    ?s co:att_countyname ?Countyname .
 
     ?s co:att_name ?att_name .
 
-    }GROUP BY ?Attraction_Countyname order by desc(?Attraction_Count)  
+    }GROUP BY ?Countyname  order by desc(?Attraction_Count)  
 
     }
-
-    
-
     {
 
     select DISTINCT ?Accomodation_Countyname (count(distinct ?acc_name) as ?Accomodation_Count)         where {    
 
-    ?s co:acc_is_in_cvd_countyname ?Accomodation_Countyname .
+    ?s co:acc_countyname ?Accomodation_Countyname .
 
     ?s co:acc_name ?acc_name .
 
     }GROUP BY ?Accomodation_Countyname order by desc(?Accomodation_Count) 
-
     }   
 
-}
+} GROUP BY ?Countyname ?Accomodation_Countyname ?Attraction_Count ?Accomodation_Count
+HAVING (?Countyname = ?Accomodation_Countyname)

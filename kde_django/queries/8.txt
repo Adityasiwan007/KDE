@@ -1,3 +1,18 @@
-select * where { 
-	?s ?p ?o .
-} limit 100 
+ PREFIX co: <http://www.semanticweb.org/kde_project/covid_effects#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+select DISTINCT ?DateFrom ?DateTo ?Gdp_Growth ?Gdp ?Peak{
+    {  
+    select DISTINCT * where { 
+    ?s co:date_from_is_in_covid ?Date .
+    ?s co:gdp_date_from ?DateFrom .
+    ?s co:gdp_date_to ?DateTo .
+    ?s co:gdp_growth ?Gdp_Growth .
+    ?s co:gdp_gdp ?Gdp.
+    } 
+    }
+    
+    {?Date co:cov_peakcovidcases ?Peak.}
+    
+} limit 1

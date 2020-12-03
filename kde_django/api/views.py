@@ -24,15 +24,15 @@ query_headers = {
     "2": [ "County", "Peak Number of Covid Cases", "Number of Accomodations" ],
     "3": [ "County", "Date of Crossing 100 Cases", "Number of Attractions" ],
     "4": [ "County", "Date of Crossing 100 Cases", "Number of Accomodations" ],
-    "5": [ "County", "Number of Attractions", "Number of Accomodations" ],
-    "6": [ "County", "Number of Covid Cases", "Number of Attractions", "Attractions per 10,000 people"],
-    "7": [ "County", "Number of Covid Cases", "Number of Accomodations", "Accomodations per 10,000 people"],
-    "8": [ "Date", "GDP", "Number of Covid Cases" ],
+    "5": [ "County", "Number of Attractions", "Number of Accomodations", "Ratio"],
+    "6": [ "County", "Population", "Number of Attractions", "Attractions per 10,000 people"],
+    "7": [ "County", "Population", "Number of Accomodations", "Accomodations per 10,000 people"],
+    "8": [ "Date From","Date To","GDP Growth","GDP", "Average of Covid Cases" ],
     "9": [ "Number of Covid Cases in County with Most Attractions ", "Number of Covid Cases in County with Fewest Attractions", "Difference"  ],
     "10": [ "Number of Covid Cases in County with Most Accomodations", "Number of Covid Cases in County with Fewest Attractions", "Difference"  ],
     }
 
-BASE_URL = 'http://69c899f17515.ngrok.io//repositories/COVID_AFFECTS_KDE_PROJECT_V3?query='
+BASE_URL = 'http://69c899f17515.ngrok.io/repositories/COVID_AFFECTS_KDE_PROJECT_V2?query='
 
 def index(request, query_id=None):
     html_template = 'home.html'
@@ -81,19 +81,23 @@ def ProcessResults(results, query_id):
             r[0], r[2] = r[2], r[0] 
             
         if(query_id == "5"):
-            #r[1], r[2] = r[2], r[1] 
-            #r.pop(-1)
-            pass
-        
-        if(query_id in ["6"]):
-            r[0], r[3] = r[3], r[0] 
-            r[1], r[2] = r[2], r[1] 
-            r[1], r[3] = r[3], r[1] 
-            #r[0], r[2] = r[2], r[0] 
-        
-        if(query_id in ["7"]):
-            r[1], r[2] = r[2], r[1] 
-            
+            r[2], r[3] = r[3], r[2] 
+            r[2], r[0] = r[0], r[2]
+            r[1], r[2] = r[2], r[1]
+
+        if(query_id == "6"):
+            r[1], r[2] = r[2], r[1]
+
+        if(query_id == "7"):
+            r[0], r[3] = r[3], r[0]
+            r[2], r[3] = r[3], r[2]
+            r[1], r[2] = r[2], r[1]
+
+        if(query_id in ["8"]):
+            r[0], r[3] = r[3], r[0]
+            r[0], r[4] = r[4], r[0]
+            r[1], r[2] = r[2], r[1]
+            r[0], r[1] = r[1], r[0]
     return processed
     
     

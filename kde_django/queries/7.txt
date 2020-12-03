@@ -3,15 +3,15 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
  
 
-select DISTINCT ?Attraction_Countyname ?Attraction_Count ?Population 
-(xsd:int(xsd:float(?Attraction_Count)/xsd:float(?Population)*10000) AS ?Ratio){
+select DISTINCT ?Accomodation_Countyname ?Accomodation_Count ?Population 
+(xsd:int(xsd:float(?Accomodation_Count)/xsd:float(?Population)*10000) AS ?Ratio){
     {  
-    select DISTINCT ?Attraction_Countyname (count(distinct ?att_name) as ?Attraction_Count) 
+    select DISTINCT ?Accomodation_Countyname (count(distinct ?acc_name) as ?Accomodation_Count) 
         where { 
-    ?s co:att_is_in_cvd_countyname ?Attraction_Countyname .
-    ?s co:att_name ?att_name .
-    }GROUP BY ?Attraction_Countyname 
+    ?s co:acc_is_in_cvd_countyname ?Accomodation_Countyname .
+    ?s co:acc_name ?acc_name .
+    }GROUP BY ?Accomodation_Countyname 
     }
     
-    {?Attraction_Countyname co:cov_population ?Population.}   
+    {?Accomodation_Countyname co:cov_population ?Population.}   
 } order by desc(?Ratio)  
