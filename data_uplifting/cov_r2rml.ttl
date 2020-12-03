@@ -1,0 +1,306 @@
+# Defining the prefixes.
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix co: <http://www.semanticweb.org/kde_project/covid_effects#> .
+@prefix base: <http://www.semanticweb.org/kde_project/covid_effects#> .
+
+# Mapping Covid dataset
+<#TriplesMapcovid>
+rr:logicalTable [
+rr:tableName "covid";
+];
+
+# Defining template for Covid dataset
+rr:subjectMap [
+rr:template "http://www.semanticweb.org/kde_project/covid_effects/{CVD_COUNTYNAME}";
+rr:class co:covid;
+];
+
+# Mapping column DATEOFCROSSING100
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:cov_dateofcrossing100;
+];
+rr:objectMap [
+rr:column "DATEOFCROSSING100";
+];
+];
+
+# Mapping column PEAKCOVIDCASES
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:cov_peakcovidcases;
+];
+rr:objectMap [
+rr:column "PEAKCOVIDCASES";
+];
+];
+
+# Mapping column POPULATION
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:cov_population;
+];
+rr:objectMap [
+rr:column "POPULATION";
+];
+];
+
+# Mapping column ID
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:cov_id;
+];
+rr:objectMap [
+rr:column "ID";
+];
+];
+
+# <---- ignore---->
+# rr:predicateObjectMap [
+# rr:predicateMap [
+# rr:constant co:is_in_date_to;
+# ];
+# rr:objectMap [
+# rr:parentTriplesMap  <#TriplesMapgdp>;
+# rr:joinCondition [
+# rr:child "DATEOFCROSSING100";
+# rr:parent "DATE_TO";
+# ];
+# ];
+# ];
+
+# rr:predicateObjectMap [
+# rr:predicateMap [
+# rr:constant co:is_in_date_from;
+# ];
+# rr:objectMap [
+# rr:parentTriplesMap  <#TriplesMapgdp>;
+# rr:joinCondition [
+# rr:child "DATEOFCROSSING100";
+# rr:parent "DATE_FROM";
+# ];
+# ];
+# ];
+.
+
+#Mapping GDP dataset
+<#TriplesMapgdp>
+rr:logicalTable [
+rr:tableName "gdp";
+];
+
+#Defining template for GDP dataset
+rr:subjectMap [
+rr:template "http://www.semanticweb.org/kde_project/covid_effects/{GDP}-{DATE_FROM}-{DATE_TO}";
+rr:class co:gdp;
+];
+
+# Mapping column GDP
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:gdp_gdp;
+];
+rr:objectMap [
+rr:column "GDP";
+];
+];
+
+# Mapping column GROWTH
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:gdp_growth;
+];
+rr:objectMap [
+rr:column "GROWTH";
+];
+];
+
+# Mapping column DATE_FROM
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:gdp_date_from;
+];
+rr:objectMap [
+rr:column "DATE_FROM";
+];
+];
+
+# Mapping column DATE_TO
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:gdp_date_to;
+];
+rr:objectMap [
+rr:column "DATE_TO";
+];
+];
+
+# Mapping column ID
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:gdp_id;
+];
+rr:objectMap [
+rr:column "ID";
+];
+];
+
+# Mapping column DATE_FROM of GDP dataset to DATEOFCROSSING100 of Covid dataset.
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:date_from_is_in_covid;
+];
+rr:objectMap [
+rr:parentTriplesMap  <#TriplesMapcovid>;
+rr:joinCondition [
+rr:child "DATE_FROM";
+rr:parent "DATEOFCROSSING100";
+];
+];
+];
+
+# Mapping column DATE_TO of GDP dataset to DATEOFCROSSING100 of Covid dataset.
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:date_to_is_in_covid;
+];
+rr:objectMap [
+rr:parentTriplesMap  <#TriplesMapcovid>;
+rr:joinCondition [
+rr:child "DATE_TO";
+rr:parent "DATEOFCROSSING100";
+];
+];
+];
+.
+
+#Mapping accomodations dataset
+<#TriplesMapaccomodations>
+rr:logicalTable [
+rr:tableName "accomodations";
+];
+
+#Defining template for accomodations dataset
+rr:subjectMap [
+rr:template "http://www.semanticweb.org/kde_project/covid_effects/{NAME}";
+rr:class co:accomodations;
+];
+
+# Mapping column ACC_COUNTYNAME
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:acc_countyname;
+];
+rr:objectMap [
+rr:column "ACC_COUNTYNAME";
+];
+];
+
+# Mapping column ID
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:acc_id;
+];
+rr:objectMap [
+rr:column "ID";
+];
+];
+
+# Mapping column NAME
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:acc_name;
+];
+rr:objectMap [
+rr:column "NAME";
+];
+];
+
+# Mapping column ACC_COUNTYNAME of accomodations dataset to CVD_COUNTYNAME of Covid dataset.
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:acc_is_in_cvd_countyname;
+];
+rr:objectMap [
+rr:parentTriplesMap  <#TriplesMapcovid>;
+rr:joinCondition [
+rr:child "ACC_COUNTYNAME";
+rr:parent "CVD_COUNTYNAME";
+];
+];
+];
+
+# <---- ignore---->
+# Mapping column ACC_COUNTYNAME of accomodations dataset to ATT_COUNTYNAME of attractions dataset.
+# rr:predicateObjectMap [
+# rr:predicateMap [
+# rr:constant co:acc_is_in_att;
+# ];
+
+# rr:objectMap [
+# rr:parentTriplesMap <#TriplesMapattractions>;
+# rr:joinCondition [
+# rr:child "ACC_COUNTYNAME";
+# rr:parent "ATT_COUNTYNAME";
+# ];
+# ];
+# ];
+.
+
+# Mapping attractions dataset
+<#TriplesMapattractions>
+rr:logicalTable [
+rr:tableName "attractions";
+];
+
+# Defining template for attractions dataset
+rr:subjectMap [
+rr:template "http://www.semanticweb.org/kde_project/covid_effects/{NAME}";
+rr:class co:attractions;
+];
+
+# Mapping column ATT_COUNTYNAME
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:att_countyname;
+];
+rr:objectMap [
+rr:column "ATT_COUNTYNAME";
+];
+];
+
+# Mapping column NAME
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:att_name;
+];
+rr:objectMap [
+rr:column "NAME";
+];
+];
+
+# Mapping column ID
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:att_id;
+];
+ rr:objectMap [
+rr:column "ID";
+];
+];
+
+# Mapping column ATT_COUNTYNAME of attractions dataset to CVD_COUNTYNAME of Covid dataset.
+rr:predicateObjectMap [
+rr:predicateMap [
+rr:constant co:att_is_in_cvd_countyname;
+];
+rr:objectMap [
+rr:parentTriplesMap  <#TriplesMapcovid>;
+rr:joinCondition [
+rr:child "ATT_COUNTYNAME";
+rr:parent "CVD_COUNTYNAME";
+];
+];
+];
+.
